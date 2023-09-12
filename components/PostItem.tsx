@@ -1,0 +1,55 @@
+import { Post } from "@/interfaces/blog.type";
+import Image from "next/image";
+import React from "react";
+type PostItemProps = {
+  post: Post;
+  handleDelete: (postId: string) => void;
+  handleEdit: (postId: string) => void;
+};
+const PostItem = ({ post, handleDelete, handleEdit }: PostItemProps) => {
+  return (
+    <div className='flex flex-col items-center overflow-hidden rounded-lg border md:flex-row'>
+      <div className='group relative block h-48 w-full shrink-0 self-start overflow-hidden bg-gray-100 md:h-full md:w-32 lg:w-48'>
+        <Image
+          src={post.featuredImage}
+          width={0}
+          height={0}
+          sizes='100%'
+          fill
+          loading='lazy'
+          alt={post.title}
+          className='absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110'
+        />
+      </div>
+      <div className='flex flex-col gap-2 p-4 h-full lg:p-6'>
+        <span className='text-sm text-gray-400'>{post.publishDate}</span>
+        <div>
+          <h2 className='text-xl font-bold text-gray-800 line-clamp-3'>
+            {post.title}
+          </h2>
+          <p className='text-gray-500 line-clamp-5'>{post.description}</p>
+        </div>
+        <div className='mt-auto'>
+          <div className='inline-flex rounded-md shadow-sm' role='group'>
+            <button
+              type='button'
+              onClick={() => handleEdit(post.id)}
+              className='rounded-l-lg border border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700'
+            >
+              Edit
+            </button>
+            <button
+              type='button'
+              onClick={() => handleDelete(post.id)}
+              className='rounded-r-lg border-t border-b border-r border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700'
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PostItem;
